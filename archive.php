@@ -20,6 +20,53 @@ get_header(); ?>
 <div class="main-container">
 	<div class="main-grid">
 		<main class="main-content">
+		<header class="main-header">
+			<div class="page-title">
+				<h1 class="page-title bold"><?php the_archive_title();?></h1>
+				<?php the_archive_description('<div class="subtitle taxonomy-description">', '</div>');?>
+			</div>
+			<div class="archive-tools">
+				<div class="archive-tools-categories">
+					<select onChange="document.location.href=this.options[this.selectedIndex].value;">
+					<option>Categories</option>
+					<?php 
+						$cats = get_categories();
+						foreach ( $cats as $cat ) {
+							$cat_link = get_category_link( $cat->term_id );
+							echo ('<option value="' . $cat_link . '">' . $cat->name . '</option>');
+						} 
+					?>
+					</select>
+				</div>
+				<div class="archive-tools-tags">
+					<select onChange="document.location.href=this.options[this.selectedIndex].value;">
+					<option>Hashtags</option>
+					<?php 
+						$tags = get_tags();
+						foreach ( $tags as $tag ) {
+							$tag_link = get_tag_link( $tag->term_id );
+							echo ('<option value="' . $tag_link . '">' . $tag->name . '</option>');
+						} 
+					?>
+					</select>
+				</div>
+				<div class="archive-tools-author">
+					<select onChange="document.location.href=this.options[this.selectedIndex].value;">
+						<option>Authors</option>
+						<?php
+							// get WordPress authors					
+							$authors = getAuthors();
+							foreach ($authors as $author)
+							{
+								// get all the user's data
+								$author_info = get_userdata($author->ID);
+								echo('<option value="' . get_author_posts_url( $author_info->ID, $author_info->user_nicename ) . '">' . $author_info->first_name . ' ' . $author_info->last_name . '</option>');
+							}
+						?>		
+					</select>		
+				</div>
+			</div>
+		</header>
 		<?php if ( have_posts() ) : ?>
 
 			<?php /* Start the Loop */ ?>
@@ -32,20 +79,9 @@ get_header(); ?>
 
 			<?php endif; // End have_posts() check. ?>
 
-			<?php /* Display navigation to next/previous pages when applicable */ ?>
-			<?php
-			if ( function_exists( 'foundationpress_pagination' ) ) :
-				foundationpress_pagination();
-			elseif ( is_paged() ) :
-			?>
-				<nav id="post-nav">
-					<div class="post-previous"><?php next_posts_link( __( '&larr; Older posts', 'foundationpress' ) ); ?></div>
-					<div class="post-next"><?php previous_posts_link( __( 'Newer posts &rarr;', 'foundationpress' ) ); ?></div>
-				</nav>
-			<?php endif; ?>
-
+			<?php if ( function_exists( 'foundationpress_pagination' ) ) { foundationpress_pagination(); } ?>
 		</main>
-		<?php get_sidebar(); ?>
+		<?php //get_sidebar(); ?>
 
 	</div>
 </div>

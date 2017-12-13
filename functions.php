@@ -53,3 +53,23 @@ require_once( 'library/responsive-images.php' );
 
 /** If your site requires protocol relative url's for theme assets, uncomment the line below */
 // require_once( 'library/class-foundationpress-protocol-relative-theme-assets.php' );
+
+
+if (!function_exists("getAuthors")) { function getAuthors() {
+    // WP_User_Query arguments
+    $args = array (
+        'role' => 'author',
+        'order' => 'ASC',
+        'orderby' => 'display_name',
+    );
+
+    // Create the WP_User_Query object
+    $wp_user_query = new WP_User_Query($args);
+
+    // Get the results
+    $authorList = $wp_user_query->get_results();
+
+    return $authorList;
+
+    }
+}
