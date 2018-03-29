@@ -25,7 +25,7 @@ get_header(); ?>
 			<h1><?php the_archive_title();?></h1>
 			<?php the_archive_description('<div class="subtitle taxonomy-description">', '</div>');?>
 		</div>
-		<?php get_template_part( 'template-parts/archive-tools', 'none' ); ?>
+		<?php //get_template_part( 'template-parts/archive-tools', 'none' ); ?>
 	</header>
 	<section id="main-posts">
 		<div class="post-grid" data-equalizer data-equalize-by-row="true">

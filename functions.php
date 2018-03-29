@@ -55,6 +55,8 @@ require_once( 'library/responsive-images.php' );
 // require_once( 'library/class-foundationpress-protocol-relative-theme-assets.php' );
 
 
+// build list of authors
+// used in template-parts/archive_tools.php
 if (!function_exists("getAuthors")) { function getAuthors() {
     // WP_User_Query arguments
     $args = array (
@@ -73,3 +75,24 @@ if (!function_exists("getAuthors")) { function getAuthors() {
 
     }
 }
+
+
+// hide the archive title prefix
+// author: Ben Gillbanks
+// https://www.binarymoon.co.uk/2017/02/hide-archive-title-prefix-wordpress/
+function hap_hide_the_archive_title( $title ) {
+    $title_parts = explode( ': ', $title, 2 );
+    if ( ! empty( $title_parts[1] ) ) {
+        $title = wp_kses(
+            $title_parts[1],
+            array(
+                'span' => array(
+                    'class' => array(),
+                ),
+            )
+        );
+        $title = '<span class="screen-reader-text">' . esc_html( $title_parts[0] ) . ': </span>' . $title;
+    }
+    return $title;
+}
+add_filter( 'get_the_archive_title', 'hap_hide_the_archive_title' );

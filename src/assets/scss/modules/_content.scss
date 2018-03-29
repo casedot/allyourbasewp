@@ -26,7 +26,14 @@
 
   // Full width template
   .main-content-full-width {
-    @include xy-cell(12);
+    @include breakpoint(small) {
+      @include xy-cell(12);
+    }
+
+    @include breakpoint(large) {
+      @include xy-cell(10);
+      @include xy-cell-offset(1);
+    }
   }
 
   // Default template
@@ -51,4 +58,147 @@
     }
 
   }
+
+  .headerGrid {
+    //@include xy-grid();
+
+    .pageTitle {
+        @include xy-cell();
+    }
+
+    .archiveTools {
+      //@include xy-cell();
+      margin-bottom: 2rem;
+
+      .archiveTools__wrapper {
+        @include xy-grid();
+        //@include xy-gutters($grid-margin-gutters, padding, top bottom);        
+
+        .archiveTool {
+          @include breakpoint(small) {
+            @include xy-cell();
+          }
+      
+          @include breakpoint(medium) {
+            @include xy-cell(4);
+          }           
+
+          select {
+            margin: 0;
+            padding: 0 1.5rem 0 .5rem;
+            border: none;
+            border-bottom: solid 1px $dark-gray;
+          }
+        }
+      }
+  
+    }
+    
+  }
+
+  .post-grid {
+    @include breakpoint(small) {
+      @include xy-grid();
+    }
+
+    .post, .news {      
+        @include breakpoint(small) {
+          position: relative;
+          @include xy-cell();
+        }
+    
+        @include breakpoint (medium) {
+          @include xy-cell();
+        }
+    
+        @include breakpoint (large) {
+          @include xy-cell(6);
+        }
+
+        .post__content {
+          background: $light-gray;
+          box-shadow: $box-shadow-default;
+        }
+
+        .entry-title {
+          position: relative;
+
+          a {
+            color: $header-color;
+            font-weight: normal;
+            text-decoration: none;
+
+            &:hover, &:focus {
+              color: $primary-color;
+              text-decoration: underline;              
+            }
+
+            span {
+              @include breakpoint(small) {
+                display: block;
+                position: relative;
+                width: 92%;
+                margin: -1rem auto 0;
+                padding: .5rem;
+                background: #fff;
+              }
+              
+              @include breakpoint(medium) {
+                margin: -2rem auto 0;
+              }
+            }
+          }
+
+          img {
+            display: block;
+            width: 100%;
+          }
+        }
+
+        .entry-subtitle {
+          position: relative;
+          width: 92%;
+          margin: -1rem auto 0;
+          padding: .5rem;
+          text-transform: uppercase;
+          display: none;
+        }
+
+        .post__footer {
+          margin-bottom: 3rem;
+        }
+
+        .postMeta__byline {
+          position: relative;
+          width: 92%;
+          margin: -1rem auto 0;
+          padding: 1.25rem .5rem .25rem;
+          font-size: $small-font-size;
+          font-style: italic;
+
+          p {
+            margin: 0;
+          }
+  
+          .postMeta__author {
+            position: relative;
+          }
+  
+          .postMeta__postLinks {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 1.25rem .5rem .25rem;
+
+            .postMeta__permalink, .postMeta__comment {
+              display: inline-block;
+              margin-left: .5rem;
+            }
+          }
+        }
+        
+      }
+  }
+
+  
 }
